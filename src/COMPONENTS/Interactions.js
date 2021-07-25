@@ -1,9 +1,15 @@
 import React from 'react'
 import { VictoryBar } from 'victory'
-const data = [{ x: 1, y: 2 }, { x: 2, y: 4 }, { x: 3, y: 7 }, { x: 4, y: 5 }, { x: 5, y: 6 }]
-function Interactions () {
-  return (<div className="uk-card uk-card-body uk-width-1-2">
-    <VictoryBar cornerRadius={ 16 } padding={ 16 } data={ data } style={{ data: { fill: "purple" }}}></VictoryBar>
+function Interactions ({ data, color, name }) {
+  return (<div className="uk-card uk-card-body uk-flex uk-flex-middle">
+    <div className="uk-width-1-2">
+      <VictoryBar cornerRadius={ 8 } data={ data } style={{ data: { fill: color }}}></VictoryBar>
+      <hr style={{ marginTop: '-0.1px' }}></hr>
+    </div>
+    <dl className="uk-description-list uk-margin-left">
+      <dt style={{ color: 'white', fontWeight: 'bold' }}>{ name }</dt>
+      <dd style={{ fontSize: '0.8em' }}>Pellentesque tincidunt tristique neque, eget venenatis enim gravida quis.</dd>
+    </dl>
   </div>)
 }
 export default Interactions

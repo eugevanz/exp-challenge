@@ -1,60 +1,54 @@
 import Income from "./COMPONENTS/Income"
+import Cost from './COMPONENTS/Cost'
+import Balance from './COMPONENTS/Balance'
 import Storage from "./COMPONENTS/Storage"
 import Rates from "./COMPONENTS/Rates"
 import Sources from "./COMPONENTS/Sources"
-import Social from "./COMPONENTS/Social"
-import Interactions from "./COMPONENTS/Interactions"
+import Todos from "./COMPONENTS/Todos"
+import eugeva from './IMAGES/eugeva.jpeg'
+import { AppContextProvider } from "./STATE"
+import SocialMedia from "./COMPONENTS/SocialMedia"
+import AllInteractions from "./COMPONENTS/AllInteractions"
 function App() {
   return (
-    <>
+    <AppContextProvider>
       <nav className="uk-navbar-container" uk-navbar="true" style={{ backgroundColor: 'rgba(48,55,106,1)' }}>
         <div className="uk-navbar-left">
-          <ul className="uk-navbar-nav">
-            <li className="uk-active"><a href="Active">Active</a></li>
-            <li>
-              <a href="Parent">Parent</a>
-              <div className="uk-navbar-dropdown">
-                <ul className="uk-nav uk-navbar-dropdown-nav">
-                  <li className="uk-active"><a href="Active">Active</a></li>
-                  <li><a href="Item">Item</a></li>
-                  <li><a href="Item">Item</a></li>
-                </ul>
+          <a href="logo" className="uk-navbar-item uk-logo">
+            <div className="uk-width-auto uk-margin-left uk-flex uk-flex-middle">
+              <img className="uk-border-circle" width="48" height="48" alt="user" src={ eugeva }></img>
+              <div className="uk-margin-left">
+                <div className="uk-text-bold uk-text-default" style={{ color: "white" }}>Eugene Van Zyl</div>
+                <div className="uk-text-small">eugevanz@gmail.com</div>
               </div>
-            </li>
-            <li><a href="Item">Item</a></li>
-          </ul>
+            </div>
+          </a>
         </div>
       </nav>
       <div className="uk-flex uk-flex-wrap uk-flex-wrap-around uk-flex-top">
         <div className="uk-width-3-4@l uk-flex uk-flex-wrap uk-flex-wrap-around">
           <Income></Income>
-          <Income></Income>
-          <Income></Income>
+          <Cost></Cost>
+          <Balance></Balance>
           <div className="uk-flex uk-flex-wrap uk-flex-wrap-around">
-            <div className="uk-flex uk-flex-wrap uk-flex-wrap-around uk-width-2-5@m">
+            <Rates></Rates>
+            <div className="uk-flex uk-flex-wrap uk-flex-wrap-around uk-width-3-5@m uk-margin-large-bottom">
               <Sources></Sources>
               <div className="uk-flex uk-flex-wrap uk-flex-wrap-around">
-                <Social></Social>
-                <Social></Social>
+                <SocialMedia></SocialMedia>
               </div>
             </div>
-            <div className="uk-width-3-5@m">
-              <Rates></Rates>
-              <div className="uk-card uk-card-body">
-                <h3 className="uk-card-title">Default</h3>
-                <p>Lorem ipsum <a href="#dolor">dolor</a> sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-              </div>
+            <div className="uk-width-2-5@m">
+              <Todos></Todos>
             </div>
           </div>
         </div>
         <div className="uk-width-1-4@l uk-width-expand@s">
           <Storage></Storage>
-          <Interactions></Interactions>
-          <Interactions></Interactions>
-          <Interactions></Interactions>
+          <AllInteractions></AllInteractions>
         </div>
     </div>
-    </>
+    </AppContextProvider>
   )
 }
 export default App;

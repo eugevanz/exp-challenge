@@ -1,52 +1,36 @@
-function getFeeds() {
-  let feeds = [];
-
-  feeds.push({
-    title: 'Visits',
-    data: getRandomDateArray(150)
-  });
-
-  feeds.push({
-    title: 'Categories',
-    data: getRandomArray(20)
-  });
-
-  feeds.push({
-    title: 'Categories',
-    data: getRandomArray(10)
-  });
-
-  feeds.push({
-    title: 'Data 4',
-    data: getRandomArray(6)
-  });
-
-  return feeds;
-}
-// Data generation
-function getRandomArray(numItems) {
-  // Create random array of objects
-  let names = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  let data = [];
-  for(var i = 0; i < numItems; i++) {
-    data.push({
-      label: names[i],
-      value: Math.round(20 + 80 * Math.random())
-    });
+import React from 'react'
+function createIncome () {
+  let linedata = [], areadata = []
+  for (let x = 0; x < 8; x++) {
+    const value = Math.floor(Math.random() * 30000) + 10000
+    linedata.push({ x: x + 1, y: value })
+    areadata.push({ x: x + 1, y: value + 7000 })
   }
-  return data;
+  return { linedata, areadata }
 }
-function getRandomDateArray(numItems) {
-  // Create random array of objects (with date)
-  let data = [];
-  let baseTime = new Date('2018-05-01T00:00:00').getTime();
-  let dayMs = 24 * 60 * 60 * 1000;
-  for(var i = 0; i < numItems; i++) {
-    data.push({
-      time: new Date(baseTime + i * dayMs),
-      value: Math.round(20 + 80 * Math.random())
-    });
+function createRates () {
+  let percentage = Math.floor(Math.random() * 98) + 10
+  return [{ x: "total", y: percentage }, { x: "remainder", y: 100 - percentage }]
+}
+function createSocial () {
+  let rates = [], engage = 1, impress = 1, follow = 1
+  for (let x = 0; x < 5; x++) {
+    const value = Math.floor(Math.random() * 7) + 1
+    rates.push({ x: x + 1, y: value })
+    engage *= value
+    impress += value
+    follow = engage + impress
   }
-  return data;
+  return { rates, engage, impress, follow }
 }
-export default getFeeds
+function createInteractions () {
+  let interactions = []
+  for (let x = 0; x < 10; x++) {
+    interactions.push({ x: x + 1, y: Math.floor(Math.random() * 10) + 1 })
+  }
+  return interactions
+}
+export const AppContext = React.createContext()
+export const AppContextProvider = ({ children }) => <AppContext.Provider value={{ createIncome, createRates, createSocial, createInteractions }}>
+  { children }
+</AppContext.Provider>

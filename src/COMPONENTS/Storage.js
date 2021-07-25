@@ -25,34 +25,43 @@ function processData (data) {
   return data.map((datum) => makeDataArray(datum));
 }
 function Storage () {
-  const [data, setData] = useState()
-  const [maxima, setMaxima] = useState()
+  const [data, setData] = useState([])
+  const [maxima, setMaxima] = useState({})
   useEffect(() => {
     setData(processData(characterData))
     setMaxima(getMaxima(characterData))
-  }, [data, maxima])
-  return (<div className="uk-card uk-card-body">
-    <p>
-      <span className="uk-margin-small-left" style={{ fontSize: '2em', color: 'white' }}>65% <span className="uk-text-default uk-text-muted uk-margin-small-left">Income</span></span>
-      <br></br>
-      <span className="uk-text-success uk-margin-small-left uk-margin-large-bottom">Increase in Average</span>
-    </p>
-    <VictoryChart padding={ 20 } polar theme={ VictoryTheme.material } domain={{ y: [0, 1] }}>
-      <VictoryGroup colorScale={ ["cyan", "orange", "tomato"] } style={{ data: { fillOpacity: 0.2, strokeWidth: 2 } }}>
-        { data.map((data, i) => <VictoryArea key={ i } data={ data }></VictoryArea>) }
-      </VictoryGroup>
-      { 
-        Object.keys(maxima).map((key, i) => <VictoryPolarAxis key={ i } dependentAxis style={{
-          axisLabel: { padding: 10 },
+  }, [])
+  return (<div className="uk-card uk-card-body uk-flex uk-flex-wrap uk-flex-around uk-margin-xlarge-bottom">
+    <div className="uk-flex uk-flex-between uk-width-1-3@m uk-width-expand@l">
+      <div className="uk-flex uk-flex-column">
+        <div className="uk-margin-small-left uk-text-bold" style={{ marginBottom: '-4px', color: 'white' }}>Cloud Storage</div>
+        <span className="uk-margin-small-left uk-margin-bottom" style={{ fontSize: '0.8em' }}>72% space used</span>
+      </div>
+      <div className="uk-flex uk-flex-column">
+        <div className="uk-flex uk-flex-middle"><div className="uk-margin-small-right" style={{ width: '10px', height: '10px', backgroundColor: 'cyan' }}></div>Net profit</div>
+        <div className="uk-flex uk-flex-middle"><div className="uk-margin-small-right" style={{ width: '10px', height: '10px', backgroundColor: 'orange' }}></div>Revenue</div>
+        <div className="uk-flex uk-flex-middle"><div className="uk-margin-small-right" style={{ width: '10px', height: '10px', backgroundColor: 'tomato' }}></div>Cashflow</div>
+      </div>
+    </div>
+    <div className="uk-margin-large">
+      <VictoryChart padding={ 20 } polar theme={ VictoryTheme.material } domain={{ y: [0, 1] }}>
+        <VictoryGroup colorScale={ ["cyan", "orange", "tomato"] } style={{ data: { fillOpacity: 0.2, strokeWidth: 2 } }}>
+          { data.map((data, i) => <VictoryArea key={ i } data={ data }></VictoryArea>) }
+        </VictoryGroup>
+        { 
+          Object.keys(maxima).map((key, i) => <VictoryPolarAxis key={ i } dependentAxis style={{
+            axisLabel: { padding: 10 },
+            axis: { stroke: "none" },
+            grid: { stroke: "none" }
+          }} tickLabelComponent={ <VictoryLabel labelPlacement="vertical"></VictoryLabel> } labelPlacement="perpendicular" axisValue={ i + 1 } label={ key } tickFormat={ (t) => Math.ceil(t * maxima[key]) } tickValues={ [0.25, 0.5, 0.75] }></VictoryPolarAxis>) 
+        }
+        <VictoryPolarAxis labelPlacement="parallel" tickFormat={ () => "" } style={{
           axis: { stroke: "none" },
-          grid: { stroke: "none" }
-        }} tickLabelComponent={ <VictoryLabel labelPlacement="vertical"></VictoryLabel> } labelPlacement="perpendicular" axisValue={ i + 1 } label={ key } tickFormat={ (t) => Math.ceil(t * maxima[key]) } tickValues={ [0.25, 0.5, 0.75] }></VictoryPolarAxis>) 
-      }
-      <VictoryPolarAxis labelPlacement="parallel" tickFormat={ () => "" } style={{
-        axis: { stroke: "none" },
-        grid: { stroke: "grey", opacity: 0.5 }
-      }}></VictoryPolarAxis>
-    </VictoryChart>
+          grid: { stroke: "grey", opacity: 0.5 }
+        }}></VictoryPolarAxis>
+      </VictoryChart>
+      <button className="uk-button uk-button-primary uk-button-large uk-width-1-1 uk-margin-top">Upgrade Storage</button>
+    </div>
   </div>)
 }
 export default Storage
